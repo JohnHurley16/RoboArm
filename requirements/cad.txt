@@ -1,0 +1,10 @@
+# Parametric CAD, analyses, print plates, mini model
+cadquery>=2.4
+numpy
+scipy
+trimesh
+manifold3d
+shapely
+vtk
+matplotlib
+pillow

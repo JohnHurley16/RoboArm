@@ -1,0 +1,15 @@
+# Simulator and RL training.  On an NVIDIA GPU install jax with CUDA first, e.g.
+#   pip install "jax[cuda12]"
+# Brax 0.14 needs the small shim in sim/jax_compat.py on JAX >= 0.11 (already wired in).
+mujoco>=3.3
+mujoco-mjx>=3.3
+jax
+brax
+stable-baselines3
+sb3-contrib
+gymnasium
+numpy
+trimesh
+pillow
+imageio[ffmpeg]
+# optional, faster contacts on NVIDIA:  warp-lang  mujoco-warp
