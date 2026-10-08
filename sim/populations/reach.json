@@ -1,0 +1,11 @@
+{
+  "group": "reach",
+  "max_parallel": 4,
+  "defaults": {"task": "reach"},
+  "runs": [
+    {"tag": "ppo",     "algo": "brax_ppo", "seed": 0},
+    {"tag": "ppo_s1",  "algo": "brax_ppo", "seed": 1, "hp": {"learning_rate": 1e-3}},
+    {"tag": "sac",     "algo": "brax_sac", "seed": 0, "hp": {"num_timesteps": 5e6}},
+    {"tag": "sb3_ppo", "algo": "sb3_ppo",  "seed": 0, "hp": {"num_envs": 512, "num_timesteps": 20e6}}
+  ]
+}

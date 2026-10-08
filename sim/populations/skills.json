@@ -1,0 +1,10 @@
+{
+  "group": "skills",
+  "max_parallel": 3,
+  "runs": [
+    {"tag": "reach_ppo", "task": "reach", "algo": "brax_ppo"},
+    {"tag": "lift_ppo",  "task": "lift",  "algo": "brax_ppo"},
+    {"tag": "place_ppo", "task": "place", "algo": "brax_ppo"},
+    {"tag": "throw_ppo", "task": "throw", "algo": "brax_ppo"}
+  ]
+}

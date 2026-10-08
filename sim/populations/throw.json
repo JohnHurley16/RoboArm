@@ -1,0 +1,85 @@
+{
+ "group": "throw",
+ "max_parallel": 3,
+ "defaults": {
+  "task": "throw"
+ },
+ "runs": [
+  {
+   "tag": "ppo_rigid_warmup",
+   "algo": "brax_ppo",
+   "seed": 4,
+   "env": {
+    "bag": {
+     "model": "rigid",
+     "size": 0.036,
+     "thick": 0.014
+    }
+   },
+   "hp": {
+    "num_timesteps": 100000000.0
+   }
+  },
+  {
+   "tag": "ppo_base",
+   "algo": "brax_ppo",
+   "seed": 0
+  },
+  {
+   "tag": "ppo_bigbatch",
+   "algo": "brax_ppo",
+   "seed": 1,
+   "hp": {
+    "num_envs": 8192,
+    "batch_size": 1024,
+    "learning_rate": 0.0005
+   }
+  },
+  {
+   "tag": "ppo_lowentropy",
+   "algo": "brax_ppo",
+   "seed": 2,
+   "hp": {
+    "entropy_cost": 0.001,
+    "discounting": 0.995
+   }
+  },
+  {
+   "tag": "ppo_near_first",
+   "algo": "brax_ppo",
+   "seed": 3,
+   "env": {
+    "distance_range": [
+     0.8,
+     1.5
+    ]
+   }
+  },
+  {
+   "tag": "sac",
+   "algo": "brax_sac",
+   "seed": 0,
+   "hp": {
+    "num_timesteps": 30000000.0
+   }
+  },
+  {
+   "tag": "sb3_sac",
+   "algo": "sb3_sac",
+   "seed": 0,
+   "hp": {
+    "num_envs": 64,
+    "num_timesteps": 5000000.0
+   }
+  },
+  {
+   "tag": "sb3_td3",
+   "algo": "sb3_td3",
+   "seed": 0,
+   "hp": {
+    "num_envs": 64,
+    "num_timesteps": 5000000.0
+   }
+  }
+ ]
+}

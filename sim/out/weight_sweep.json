@@ -1,0 +1,51 @@
+[
+ {
+  "mass_g": 25,
+  "distance": 3.6,
+  "release_speed": 4.98,
+  "note": "released by the gripper",
+  "hold_g": 36
+ },
+ {
+  "mass_g": 60,
+  "distance": 4.24,
+  "release_speed": 5.48,
+  "note": "released by the gripper",
+  "hold_g": 15
+ },
+ {
+  "mass_g": 100,
+  "distance": 4.26,
+  "release_speed": 5.62,
+  "note": "released by the gripper",
+  "hold_g": 9
+ },
+ {
+  "mass_g": 150,
+  "distance": 3.09,
+  "release_speed": 5.13,
+  "note": "released by the gripper",
+  "hold_g": 6
+ },
+ {
+  "mass_g": 250,
+  "distance": 2.21,
+  "release_speed": 0.54,
+  "note": "slipped out mid-swing",
+  "hold_g": 4
+ },
+ {
+  "mass_g": 350,
+  "distance": 1.91,
+  "release_speed": 0.66,
+  "note": "slipped out mid-swing",
+  "hold_g": 3
+ },
+ {
+  "mass_g": 450,
+  "distance": 0.76,
+  "release_speed": 1.04,
+  "note": "released by the gripper",
+  "hold_g": 2
+ }
+]
