@@ -1,0 +1,37 @@
+Section,Part,Spec,Need,Buy,Packs,Est. price each (USD),Est. line (USD),Amazon,Notes
+Motors and actuation,CubeMars GL60 KV25 gimbal motor,"Shoulder and elbow: 0.6 Nm rated, 1.75 Nm peak, 230 g",2,Each,2,108.99,217.98,https://www.cubemars.com/product/gl60-kv25-gimbal-motor.html,Price from CubeMars. Not stocked by Amazon; RobotShop also carries it.
+Motors and actuation,CubeMars GL40 KV70 gimbal motor,"Base, wrist pitch, wrist roll: 0.25 Nm rated, 0.5 Nm peak, 107 g",3,Each,3,72.99,218.97,https://www.cubemars.com/product/gl40-kv70-gimbal-motor.html,Download CubeMars' 2D drawing and copy the hole patterns into MOTORS in params.py before printing.
+Motors and actuation,MG90S metal-gear micro servo,Gripper drive,1,4-pack,1,13.00,13.00,https://www.amazon.com/dp/B07L6FZVT1,Spares are handy; cheap servos vary.
+Bearings,608ZZ bearing,8 × 22 × 7 mm,10,10-pack,1,9.00,9.00,https://www.amazon.com/dp/B002BBICBK,
+Bearings,6705ZZ thin-section bearing,25 × 32 × 4 mm,10,10-pack,1,22.00,22.00,https://www.amazon.com/dp/B0CHDYFGMQ,"Two per actuator, carrying the capstan pulley."
+Bearings,684ZZ bearing,4 × 9 × 4 mm,1,10-pack,1,8.00,8.00,https://www.amazon.com/dp/B07R8YMF2X,Balancer idler.
+Pins and shafts,Dowel pin assortment M2/M3/M4,For the 3 × 8 and 3 × 12 balancer pins,2,300-pc kit,1,14.00,14.00,https://www.amazon.com/dp/B0C3QP216P,Check the kit lists 3 × 8 and 3 × 12.
+Pins and shafts,"8 mm hardened rod, 300 mm","Joint shafts: 3 × 44, 30, 60 mm",222 mm,2-pack,1,13.00,13.00,https://www.amazon.com/dp/B081YJ7Y8N,"Hardened chrome: cut with an abrasive disc, then chamfer the ends."
+Pins and shafts,M8 shim washers 0.5 mm,8 × 12 × 0.5 mm,7,50-pack,1,7.00,7.00,https://www.amazon.com/dp/B0G8KSZNFB,"12 mm OD bears only on the bearing's inner race, which is what you want."
+Pins and shafts,E-clip assortment (DIN 6799),Size 7 fits the 8 mm wrist-roll shaft,1,120-pc kit,1,9.00,9.00,https://www.amazon.com/dp/B0FX4LDJD5,Needs a 7 mm groove cut near the shaft end. Retaining compound works instead.
+Sensing,AS5047P magnetic encoder breakout,"Joint encoders J1–J4, SPI to each driver's aux port",4,Each,4,15.00,60.00,https://www.amazon.com/dp/B0DLJ6XDNM,Board sizes vary. Measure yours and edit ENC in params.py before printing the joint caps. Motor encoders are built into the drivers.
+Sensing,Diametric magnet 6 × 2.5 mm,For the joint encoders (drivers ship with their own),4,100-pack,1,11.00,11.00,https://www.amazon.com/dp/B0CGRJ567M,
+Heat-set inserts,M3 heat-set insert,"M3 × 5.7 mm, 4.6 mm OD",145,100-pack,2,11.00,22.00,https://www.amazon.com/dp/B08T9TMSTB,
+Heat-set inserts,M2 heat-set insert,"3.2 mm OD (driver standoffs, encoder boards)",20,100-pack,1,7.00,7.00,https://www.amazon.com/dp/B0D3B4VDH4,
+Screws and nuts,M3 socket-head kit with nuts and washers,"6, 8, 10, 12, 16, 20, 25, 30 mm",≈50 screws + 11 washers,640-pc kit,1,22.00,22.00,https://www.amazon.com/dp/B0HKFCTLK8,Covers everything except the M3 × 10 count below.
+Screws and nuts,M3 × 10 socket head,Actuator mounts and link bridges,58,100-pack,1,9.00,9.00,,
+Screws and nuts,M3 × 35 socket head,Palm pivots,3,30-pack,1,8.00,8.00,https://www.amazon.com/dp/B01H24CS1K,
+Screws and nuts,M3 × 6 button head,"Can, retainers, cable clamps",56,100-pack,1,9.00,9.00,https://www.amazon.com/dp/B07H146QC9,
+Screws and nuts,M3 button-head kit,M3 × 8 (5) and rotor-adapter screws,13,230-pc kit,1,12.00,12.00,https://www.amazon.com/dp/B0BCL3Q25C,
+Screws and nuts,M2.5 socket and button head kit,GL40 stator and rotor screws (if M2.5; check the drawing),24,Kit,1,12.00,12.00,,Keep screws short. The drawings give a maximum screw depth into the motor.
+Screws and nuts,Set-screw kit M3–M8,"M3 × 6 (5) and M3 × 8 (4), cup point",9,200-pc kit,1,10.00,10.00,https://www.amazon.com/dp/B07DCR2MF9,
+Screws and nuts,Nylon lock-nut kit M3–M12,"M3 (11), M4 (1)",12,175-pc kit,1,13.00,13.00,https://www.amazon.com/dp/B071GF2Z67,
+Screws and nuts,M4 × 20 socket head,Balancer idler bolt,1,10-pack,1,6.00,6.00,https://www.amazon.com/dp/B00JDU11II,
+Screws and nuts,M2 × 5 socket head,Drivers to standoffs,20,100-pack,1,7.00,7.00,https://www.amazon.com/dp/B00XP4UXAU,
+Screws and nuts,M2 self-tapping screw kit,M2 × 6 (8) and M2 × 20 (2),10,800-pc kit,1,11.00,11.00,https://www.amazon.com/dp/B08FQSGLL7,
+Cable and spring,"Dyneema / UHMWPE cord, 1 mm","About 2.4 m total, 6 runs",2.4 m,100 ft spool,1,10.00,10.00,https://www.amazon.com/dp/B07BKSJFJ8,350 lb rated. Extra length for practice wraps and re-tensioning.
+Cable and spring,Balancer compression spring,"2.2 mm music wire, 21 mm OD, ~78 mm free, ~3.2 N/mm, ends closed & ground",1,Spring supplier,1,8.00,8.00,https://www.mcmaster.com/compression-springs/,"Optional now: the shoulder motor can hold the arm without it, but the spring cuts its heating about 5×. Price excludes shipping."
+Electronics to run it,mjbots moteus-c1 motor driver,"38 × 38 mm, 5 A continuous, built-in motor encoder, CAN-FD",5,Each,5,69.00,345.00,https://mjbots.com/products/moteus-c1,Price from mjbots. Each driver mounts on the back of its motor and reads the joint encoder on its aux port.
+Electronics to run it,mjbots mjcanfd-usb-1x,USB to CAN-FD adapter: drive all five joints from a PC,1,Each,1,39.00,39.00,https://mjbots.com/products/mjcanfd-usb-1x,
+Electronics to run it,Raspberry Pi Pico,Drives the gripper servo over USB,1,Each,1,6.00,6.00,,
+Electronics to run it,24 V 10 A power supply,240 W,1,Each,1,30.00,30.00,https://www.amazon.com/dp/B078RYWZMH,
+Electronics to run it,5 V 3 A buck converter,Servo power,1,10-pack,1,12.00,12.00,https://www.amazon.com/dp/B08JZ5FVLC,
+Electronics to run it,"Emergency stop, latching",Cuts motor power,1,Each,1,14.00,14.00,https://www.amazon.com/dp/B00N429U1G,
+Electronics to run it,"XT30 leads, male/female",Power daisy-chain between drivers,6 pairs,Pack,1,10.00,10.00,,
+Electronics to run it,JST PH 3-pin and JST GH 7-pin cables,"CAN daisy-chain, encoder leads",10,Kits,2,9.00,18.00,,Search for the GH 1.25 mm 7-pin kit separately.
+Electronics to run it,22 AWG silicone wire kit,6 colors,1,Kit,1,15.00,15.00,https://www.amazon.com/dp/B07G2JWYDW,

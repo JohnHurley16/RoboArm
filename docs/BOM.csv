@@ -1,0 +1,100 @@
+type,item,qty
+printed,base,1
+printed,act_front_cap,5
+printed,act_motor_can_GL40,3
+printed,act_rear_plate_GL40,3
+printed,act_rear_lid_GL40,3
+printed,act_hub,5
+printed,act_rotor_adapter_GL40,3
+printed,act_spider_tpu,5
+printed,act_retainer_ring,5
+printed,act_bearing_spacer,5
+printed,act_magnet_plug_GL40,3
+printed,joint_cap,4
+printed,turret_drum,1
+printed,turret_body,1
+printed,j1_spacer,1
+printed,act_motor_can_GL60,2
+printed,act_rear_plate_GL60,2
+printed,act_rear_lid_GL60,2
+printed,act_rotor_adapter_GL60,2
+printed,act_magnet_plug_GL60,2
+printed,balancer_idler,1
+printed,balancer_spacer,1
+printed,balancer_bracket,1
+printed,balancer_tube,1
+printed,upper_arm,1
+printed,balancer_spool,1
+printed,sector_j2,1
+printed,upper_arm_cheek_a,1
+printed,upper_arm_cheek_b,1
+printed,forearm,1
+printed,sector_j3,1
+printed,forearm_cheek_a,1
+printed,forearm_cheek_b,1
+printed,hand,1
+printed,sector_j4,1
+printed,wrist_yoke,1
+printed,roll_pulley_guard,1
+printed,roll_spacer,1
+printed,roll_flange,1
+printed,palm,1
+printed,servo_cover,1
+printed,link_drive_upper,1
+printed,link_drive_lower,1
+printed,link_follow,2
+printed,finger,2
+printed,finray_tpu,2
+printed,balancer_piston,1
+printed,balancer_piston_pulley,1
+purchased,"608 bearing (8x22x7)",10
+purchased,"6705 bearing (25x32x4)",10
+purchased,"684ZZ bearing (4x9x4)",1
+purchased,"8 mm e-clip (DIN 6799)",1
+purchased,"8 mm steel shaft x 30 mm",1
+purchased,"8 mm steel shaft x 44 mm (h6 / linear rod)",3
+purchased,"8 mm steel shaft x 60 mm",1
+purchased,"AS5047P encoder breakout (joint encoder, to the driver aux port)",4
+purchased,"Compression spring, music wire 2.2 mm, OD 21 mm, free length 78 mm, ~3.2 N/mm, ends closed & ground",1
+purchased,"CubeMars GL40 KV70",3
+purchased,"CubeMars GL60 KV25",2
+purchased,"Diametric magnet 6x2.5 mm",4
+purchased,"Dowel pin 3x12 (piston pulley)",1
+purchased,"Dowel pin 3x8 (balancer ear)",1
+purchased,"M2 heat-set insert",20
+purchased,"M2.5x5 button head (rotor adapter; check max depth on the drawing)",12
+purchased,"M2.5x6 socket head (motor to plate; check max depth on the drawing)",12
+purchased,"M2x20 self-tapping screw (servo)",2
+purchased,"M2x5 socket head (driver)",20
+purchased,"M2x6 self-tapping screw (encoder board)",8
+purchased,"M3 heat-set insert (M3x5.7, 4.6 OD)",145
+purchased,"M3 nyloc nut",11
+purchased,"M3 washer (cable clamp)",11
+purchased,"M3x10 socket head",38
+purchased,"M3x10 socket head (actuator mount)",20
+purchased,"M3x12 socket head",2
+purchased,"M3x12 socket head (finger pin)",4
+purchased,"M3x16 socket head (fingertip)",4
+purchased,"M3x16 socket head (joint cap)",8
+purchased,"M3x35 socket head (palm pivot)",3
+purchased,"M3x5 button head (rotor adapter; check max depth on the drawing)",8
+purchased,"M3x6 button head (cable clamp)",11
+purchased,"M3x6 button head (can)",30
+purchased,"M3x6 button head (retainer)",15
+purchased,"M3x6 grub screw (pulley cable clamp)",5
+purchased,"M3x6 socket head (motor to plate; check max depth on the drawing)",8
+purchased,"M3x8 button head",5
+purchased,"M3x8 grub screw (shaft lock)",4
+purchased,"M3x8 socket head",3
+purchased,"M3x8 socket head (sector)",9
+purchased,"M4 nyloc nut",1
+purchased,"M4x20 socket head (balancer idler)",1
+purchased,"M8 shim washer 8x14x0.5",7
+purchased,"MG90S metal-gear micro servo",1
+purchased,"mjbots moteus-c1 motor driver",5
+purchased,"Dyneema 1 mm cable for J1 (501 mm incl. tails)",1
+purchased,"Dyneema 1 mm cable for J2 (367 mm incl. tails)",1
+purchased,"Dyneema 1 mm cable for J3 (396 mm incl. tails)",1
+purchased,"Dyneema 1 mm cable for J4 (329 mm incl. tails)",1
+purchased,"Dyneema 1 mm cable for J5 (394 mm incl. tails)",1
+purchased,"Dyneema 1 mm cable for shoulder balancer (410 mm incl. tails)",1

@@ -1,0 +1,199 @@
+<title>Capstan Arm 5 Parts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; summary strip up top, then one ruled table per part family */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --ink: #17191d;
+  --ink-2: #5d6371;
+  --line: #dde0e5;
+  --accent: #d95a12;
+  --accent-soft: #fbe7da;
+  --done: #2f7d4f;
+  --f-display: "Saira Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131519; --surface: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae; --line: #2c3038;
+    --accent: #f2772e; --accent-soft: #3a2518; --done: #5cc48a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131519; --surface: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae; --line: #2c3038;
+  --accent: #f2772e; --accent-soft: #3a2518; --done: #5cc48a; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font: 400 14px/1.5 var(--f-body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 6px; }
+h1 { margin: 0; font: 700 34px/1.05 var(--f-display); letter-spacing: 0.005em; text-wrap: balance; }
+.lede { margin: 0; color: var(--ink-2); max-width: 68ch; }
+.lede b { color: var(--ink); font-weight: 600; }
+.summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat .k { font: 600 11px var(--f-display); text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-2); }
+.stat .v { font: 500 24px var(--f-mono); font-variant-numeric: tabular-nums; }
+.stat.total .v { color: var(--accent); }
+.stat .s { font-size: 12px; color: var(--ink-2); }
+.bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--done); transition: width .25s; }
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.controls label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+.controls input { accent-color: var(--accent); width: 16px; height: 16px; }
+.controls button { font: 500 13px var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.controls button:hover { border-color: var(--ink-2); }
+#sections { display: flex; flex-direction: column; gap: 30px; }
+section { display: flex; flex-direction: column; gap: 10px; }
+section h2 { margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 700 19px var(--f-display); }
+section h2 span { font: 500 14px var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+section.elec h2::after { content: none; }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; min-width: 780px; table-layout: fixed; }
+th { text-align: left; font: 600 11px var(--f-display); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.chk { width: 34px; }
+td.chk input { accent-color: var(--done); width: 17px; height: 17px; margin-top: 2px; cursor: pointer; }
+.pname { font-weight: 600; }
+.spec { color: var(--ink-2); font-size: 13px; }
+.note { margin-top: 4px; font-size: 12.5px; color: var(--ink-2); padding-left: 10px; border-left: 2px solid var(--accent-soft); }
+tr.done .pname, tr.done .spec { text-decoration: line-through; text-decoration-color: var(--ink-2); }
+tr.done td { opacity: .55; }
+tr.owned td.num.line { color: var(--ink-2); }
+.need { white-space: normal; font-family: var(--f-mono); font-size: 13px; }
+.buy { white-space: nowrap; }
+.links { display: flex; flex-direction: column; gap: 3px; white-space: nowrap; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a.sec { color: var(--ink-2); font-size: 12px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.est { font-size: 11px; color: var(--ink-2); font-family: var(--f-body); }
+footer { color: var(--ink-2); font-size: 13px; display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
+footer code { font-family: var(--f-mono); font-size: 12.5px; }
+@media (max-width: 720px) {
+  .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1 { font-size: 28px; }
+  .wrap { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Capstan Arm 5 Parts</h1>
+    <p class="lede">Everything you buy for the direct-drive version of the arm, matched to the 3D model's hardware list. Motors and drivers come from CubeMars and mjbots at their listed prices. <b>Amazon prices are estimates</b> (USD, October 2026), not read live. Check each listing before ordering. Tick a row once it's ordered; the ticks stay in this browser.</p>
+  </header>
+
+  <div class="summary" aria-live="polite">
+    <div class="stat"><span class="k">Mechanical</span><span class="v" id="s-mech">$0</span><span class="s" id="s-mech-n"></span></div>
+    <div class="stat"><span class="k">Electronics</span><span class="v" id="s-elec">$0</span><span class="s" id="s-elec-n"></span></div>
+    <div class="stat total"><span class="k">Estimated total</span><span class="v" id="s-total">$0</span><span class="s" id="s-total-n"></span></div>
+    <div class="stat"><span class="k">Ordered</span><span class="v" id="s-done">0 / 0</span><span class="s" id="s-left"></span><div class="bar"><i id="s-bar"></i></div></div>
+  </div>
+
+  <div class="controls">
+    <label><input type="checkbox" id="inc-elec" checked> Include electronics in the total</label>
+    <button type="button" id="clear">Clear ticks</button>
+  </div>
+
+  <div id="sections"></div>
+
+  <footer>
+    <p>"Need" is what the model uses. "Buy" is the pack to order, and the line total multiplies the pack price by the number of packs. Kits cover several screw sizes at once, so check the per-size counts on the listing.</p>
+    <p>Printed parts are not included; you'll also want black TPU 95A filament for the fingertips and coupling spiders. To change items or prices, edit <code>bom/bom_data.py</code> in the project and run <code>python bom/make_bom.py</code>, which also writes <code>bom_priced.csv</code>.</p>
+  </footer>
+</div>
+
+<script>
+const ROWS = [{"part": "CubeMars GL60 KV25 gimbal motor", "spec": "Shoulder and elbow: 0.6 Nm rated, 1.75 Nm peak, 230 g", "need": "2", "buy": "Each", "qty": 2, "price": 108.99, "asin": null, "alt": ["CubeMars store", "https://www.cubemars.com/product/gl60-kv25-gimbal-motor.html"], "q": "CubeMars GL60 KV25", "note": "Price from CubeMars. Not stocked by Amazon; RobotShop also carries it.", "section": "Motors and actuation", "electronics": false, "url": null, "search": "https://www.amazon.com/s?k=CubeMars+GL60+KV25", "line": 217.98}, {"part": "CubeMars GL40 KV70 gimbal motor", "spec": "Base, wrist pitch, wrist roll: 0.25 Nm rated, 0.5 Nm peak, 107 g", "need": "3", "buy": "Each", "qty": 3, "price": 72.99, "asin": null, "alt": ["CubeMars store", "https://www.cubemars.com/product/gl40-kv70-gimbal-motor.html"], "q": "CubeMars GL40 KV70", "note": "Download CubeMars' 2D drawing and copy the hole patterns into MOTORS in params.py before printing.", "section": "Motors and actuation", "electronics": false, "url": null, "search": "https://www.amazon.com/s?k=CubeMars+GL40+KV70", "line": 218.97}, {"part": "MG90S metal-gear micro servo", "spec": "Gripper drive", "need": "1", "buy": "4-pack", "qty": 1, "price": 13.0, "asin": "B07L6FZVT1", "q": "MG90S metal gear micro servo 4 pack", "note": "Spares are handy; cheap servos vary.", "section": "Motors and actuation", "electronics": false, "url": "https://www.amazon.com/dp/B07L6FZVT1", "search": "https://www.amazon.com/s?k=MG90S+metal+gear+micro+servo+4+pack", "line": 13.0}, {"part": "608ZZ bearing", "spec": "8 × 22 × 7 mm", "need": "10", "buy": "10-pack", "qty": 1, "price": 9.0, "asin": "B002BBICBK", "q": "608ZZ bearing 10 pack", "section": "Bearings", "electronics": false, "url": "https://www.amazon.com/dp/B002BBICBK", "search": "https://www.amazon.com/s?k=608ZZ+bearing+10+pack", "line": 9.0}, {"part": "6705ZZ thin-section bearing", "spec": "25 × 32 × 4 mm", "need": "10", "buy": "10-pack", "qty": 1, "price": 22.0, "asin": "B0CHDYFGMQ", "q": "6705ZZ bearing 25x32x4 10pcs", "note": "Two per actuator, carrying the capstan pulley.", "section": "Bearings", "electronics": false, "url": "https://www.amazon.com/dp/B0CHDYFGMQ", "search": "https://www.amazon.com/s?k=6705ZZ+bearing+25x32x4+10pcs", "line": 22.0}, {"part": "684ZZ bearing", "spec": "4 × 9 × 4 mm", "need": "1", "buy": "10-pack", "qty": 1, "price": 8.0, "asin": "B07R8YMF2X", "q": "684ZZ bearing 4x9x4", "note": "Balancer idler.", "section": "Bearings", "electronics": false, "url": "https://www.amazon.com/dp/B07R8YMF2X", "search": "https://www.amazon.com/s?k=684ZZ+bearing+4x9x4", "line": 8.0}, {"part": "Dowel pin assortment M2/M3/M4", "spec": "For the 3 × 8 and 3 × 12 balancer pins", "need": "2", "buy": "300-pc kit", "qty": 1, "price": 14.0, "asin": "B0C3QP216P", "q": "M3 dowel pin assortment stainless", "note": "Check the kit lists 3 × 8 and 3 × 12.", "section": "Pins and shafts", "electronics": false, "url": "https://www.amazon.com/dp/B0C3QP216P", "search": "https://www.amazon.com/s?k=M3+dowel+pin+assortment+stainless", "line": 14.0}, {"part": "8 mm hardened rod, 300 mm", "spec": "Joint shafts: 3 × 44, 30, 60 mm", "need": "222 mm", "buy": "2-pack", "qty": 1, "price": 13.0, "asin": "B081YJ7Y8N", "q": "8mm x 300mm linear rod", "note": "Hardened chrome: cut with an abrasive disc, then chamfer the ends.", "section": "Pins and shafts", "electronics": false, "url": "https://www.amazon.com/dp/B081YJ7Y8N", "search": "https://www.amazon.com/s?k=8mm+x+300mm+linear+rod", "line": 13.0}, {"part": "M8 shim washers 0.5 mm", "spec": "8 × 12 × 0.5 mm", "need": "7", "buy": "50-pack", "qty": 1, "price": 7.0, "asin": "B0G8KSZNFB", "q": "M8 x 12 x 0.5mm washer", "note": "12 mm OD bears only on the bearing's inner race, which is what you want.", "section": "Pins and shafts", "electronics": false, "url": "https://www.amazon.com/dp/B0G8KSZNFB", "search": "https://www.amazon.com/s?k=M8+x+12+x+0.5mm+washer", "line": 7.0}, {"part": "E-clip assortment (DIN 6799)", "spec": "Size 7 fits the 8 mm wrist-roll shaft", "need": "1", "buy": "120-pc kit", "qty": 1, "price": 9.0, "asin": "B0FX4LDJD5", "q": "DIN 6799 e-clip assortment stainless", "note": "Needs a 7 mm groove cut near the shaft end. Retaining compound works instead.", "section": "Pins and shafts", "electronics": false, "url": "https://www.amazon.com/dp/B0FX4LDJD5", "search": "https://www.amazon.com/s?k=DIN+6799+e-clip+assortment+stainless", "line": 9.0}, {"part": "AS5047P magnetic encoder breakout", "spec": "Joint encoders J1–J4, SPI to each driver's aux port", "need": "4", "buy": "Each", "qty": 4, "price": 15.0, "asin": "B0DLJ6XDNM", "q": "AS5047P magnetic encoder breakout", "note": "Board sizes vary. Measure yours and edit ENC in params.py before printing the joint caps. Motor encoders are built into the drivers.", "section": "Sensing", "electronics": false, "url": "https://www.amazon.com/dp/B0DLJ6XDNM", "search": "https://www.amazon.com/s?k=AS5047P+magnetic+encoder+breakout", "line": 60.0}, {"part": "Diametric magnet 6 × 2.5 mm", "spec": "For the joint encoders (drivers ship with their own)", "need": "4", "buy": "100-pack", "qty": 1, "price": 11.0, "asin": "B0CGRJ567M", "q": "diametric magnet 6x2.5mm", "section": "Sensing", "electronics": false, "url": "https://www.amazon.com/dp/B0CGRJ567M", "search": "https://www.amazon.com/s?k=diametric+magnet+6x2.5mm", "line": 11.0}, {"part": "M3 heat-set insert", "spec": "M3 × 5.7 mm, 4.6 mm OD", "need": "145", "buy": "100-pack", "qty": 2, "price": 11.0, "asin": "B08T9TMSTB", "q": "M3x5.7 OD4.6 heat set insert", "section": "Heat-set inserts", "electronics": false, "url": "https://www.amazon.com/dp/B08T9TMSTB", "search": "https://www.amazon.com/s?k=M3x5.7+OD4.6+heat+set+insert", "line": 22.0}, {"part": "M2 heat-set insert", "spec": "3.2 mm OD (driver standoffs, encoder boards)", "need": "20", "buy": "100-pack", "qty": 1, "price": 7.0, "asin": "B0D3B4VDH4", "q": "M2 heat set insert 3.2mm OD", "section": "Heat-set inserts", "electronics": false, "url": "https://www.amazon.com/dp/B0D3B4VDH4", "search": "https://www.amazon.com/s?k=M2+heat+set+insert+3.2mm+OD", "line": 7.0}, {"part": "M3 socket-head kit with nuts and washers", "spec": "6, 8, 10, 12, 16, 20, 25, 30 mm", "need": "≈50 screws + 11 washers", "buy": "640-pc kit", "qty": 1, "price": 22.0, "asin": "B0HKFCTLK8", "q": "M3 socket head cap screw kit 6-30mm", "note": "Covers everything except the M3 × 10 count below.", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B0HKFCTLK8", "search": "https://www.amazon.com/s?k=M3+socket+head+cap+screw+kit+6-30mm", "line": 22.0}, {"part": "M3 × 10 socket head", "spec": "Actuator mounts and link bridges", "need": "58", "buy": "100-pack", "qty": 1, "price": 9.0, "asin": null, "q": "M3 x 10mm socket head cap screw 100 pack", "section": "Screws and nuts", "electronics": false, "url": null, "search": "https://www.amazon.com/s?k=M3+x+10mm+socket+head+cap+screw+100+pack", "line": 9.0}, {"part": "M3 × 35 socket head", "spec": "Palm pivots", "need": "3", "buy": "30-pack", "qty": 1, "price": 8.0, "asin": "B01H24CS1K", "q": "M3 x 35mm socket head cap screw", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B01H24CS1K", "search": "https://www.amazon.com/s?k=M3+x+35mm+socket+head+cap+screw", "line": 8.0}, {"part": "M3 × 6 button head", "spec": "Can, retainers, cable clamps", "need": "56", "buy": "100-pack", "qty": 1, "price": 9.0, "asin": "B07H146QC9", "q": "M3 x 6mm button head screw 100", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B07H146QC9", "search": "https://www.amazon.com/s?k=M3+x+6mm+button+head+screw+100", "line": 9.0}, {"part": "M3 button-head kit", "spec": "M3 × 8 (5) and rotor-adapter screws", "need": "13", "buy": "230-pc kit", "qty": 1, "price": 12.0, "asin": "B0BCL3Q25C", "q": "M3 button head screw assortment", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B0BCL3Q25C", "search": "https://www.amazon.com/s?k=M3+button+head+screw+assortment", "line": 12.0}, {"part": "M2.5 socket and button head kit", "spec": "GL40 stator and rotor screws (if M2.5; check the drawing)", "need": "24", "buy": "Kit", "qty": 1, "price": 12.0, "asin": null, "q": "M2.5 socket head button head screw assortment kit", "note": "Keep screws short. The drawings give a maximum screw depth into the motor.", "section": "Screws and nuts", "electronics": false, "url": null, "search": "https://www.amazon.com/s?k=M2.5+socket+head+button+head+screw+assortment+kit", "line": 12.0}, {"part": "Set-screw kit M3–M8", "spec": "M3 × 6 (5) and M3 × 8 (4), cup point", "need": "9", "buy": "200-pc kit", "qty": 1, "price": 10.0, "asin": "B07DCR2MF9", "q": "M3 set screw assortment cup point", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B07DCR2MF9", "search": "https://www.amazon.com/s?k=M3+set+screw+assortment+cup+point", "line": 10.0}, {"part": "Nylon lock-nut kit M3–M12", "spec": "M3 (11), M4 (1)", "need": "12", "buy": "175-pc kit", "qty": 1, "price": 13.0, "asin": "B071GF2Z67", "q": "metric nyloc nut assortment stainless", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B071GF2Z67", "search": "https://www.amazon.com/s?k=metric+nyloc+nut+assortment+stainless", "line": 13.0}, {"part": "M4 × 20 socket head", "spec": "Balancer idler bolt", "need": "1", "buy": "10-pack", "qty": 1, "price": 6.0, "asin": "B00JDU11II", "q": "M4 x 20mm socket head cap screw", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B00JDU11II", "search": "https://www.amazon.com/s?k=M4+x+20mm+socket+head+cap+screw", "line": 6.0}, {"part": "M2 × 5 socket head", "spec": "Drivers to standoffs", "need": "20", "buy": "100-pack", "qty": 1, "price": 7.0, "asin": "B00XP4UXAU", "q": "M2 x 5mm socket head cap screw", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B00XP4UXAU", "search": "https://www.amazon.com/s?k=M2+x+5mm+socket+head+cap+screw", "line": 7.0}, {"part": "M2 self-tapping screw kit", "spec": "M2 × 6 (8) and M2 × 20 (2)", "need": "10", "buy": "800-pc kit", "qty": 1, "price": 11.0, "asin": "B08FQSGLL7", "q": "M2 self tapping screw assortment", "section": "Screws and nuts", "electronics": false, "url": "https://www.amazon.com/dp/B08FQSGLL7", "search": "https://www.amazon.com/s?k=M2+self+tapping+screw+assortment", "line": 11.0}, {"part": "Dyneema / UHMWPE cord, 1 mm", "spec": "About 2.4 m total, 6 runs", "need": "2.4 m", "buy": "100 ft spool", "qty": 1, "price": 10.0, "asin": "B07BKSJFJ8", "q": "1mm UHMWPE cord", "note": "350 lb rated. Extra length for practice wraps and re-tensioning.", "section": "Cable and spring", "electronics": false, "url": "https://www.amazon.com/dp/B07BKSJFJ8", "search": "https://www.amazon.com/s?k=1mm+UHMWPE+cord", "line": 10.0}, {"part": "Balancer compression spring", "spec": "2.2 mm music wire, 21 mm OD, ~78 mm free, ~3.2 N/mm, ends closed & ground", "need": "1", "buy": "Spring supplier", "qty": 1, "price": 8.0, "asin": null, "alt": ["McMaster-Carr springs", "https://www.mcmaster.com/compression-springs/"], "alt2": ["Lee Spring", "https://www.leespring.com/compression-springs"], "note": "Optional now: the shoulder motor can hold the arm without it, but the spring cuts its heating about 5×. Price excludes shipping.", "section": "Cable and spring", "electronics": false, "url": null, "search": null, "line": 8.0}, {"part": "mjbots moteus-c1 motor driver", "spec": "38 × 38 mm, 5 A continuous, built-in motor encoder, CAN-FD", "need": "5", "buy": "Each", "qty": 5, "price": 69.0, "asin": null, "alt": ["mjbots", "https://mjbots.com/products/moteus-c1"], "q": "moteus c1", "note": "Price from mjbots. Each driver mounts on the back of its motor and reads the joint encoder on its aux port.", "section": "Electronics to run it", "electronics": true, "url": null, "search": "https://www.amazon.com/s?k=moteus+c1", "line": 345.0}, {"part": "mjbots mjcanfd-usb-1x", "spec": "USB to CAN-FD adapter: drive all five joints from a PC", "need": "1", "buy": "Each", "qty": 1, "price": 39.0, "asin": null, "alt": ["mjbots", "https://mjbots.com/products/mjcanfd-usb-1x"], "q": "USB CAN-FD adapter", "section": "Electronics to run it", "electronics": true, "url": null, "search": "https://www.amazon.com/s?k=USB+CAN-FD+adapter", "line": 39.0}, {"part": "Raspberry Pi Pico", "spec": "Drives the gripper servo over USB", "need": "1", "buy": "Each", "qty": 1, "price": 6.0, "asin": null, "q": "Raspberry Pi Pico RP2040", "section": "Electronics to run it", "electronics": true, "url": null, "search": "https://www.amazon.com/s?k=Raspberry+Pi+Pico+RP2040", "line": 6.0}, {"part": "24 V 10 A power supply", "spec": "240 W", "need": "1", "buy": "Each", "qty": 1, "price": 30.0, "asin": "B078RYWZMH", "q": "24V 10A power supply", "section": "Electronics to run it", "electronics": true, "url": "https://www.amazon.com/dp/B078RYWZMH", "search": "https://www.amazon.com/s?k=24V+10A+power+supply", "line": 30.0}, {"part": "5 V 3 A buck converter", "spec": "Servo power", "need": "1", "buy": "10-pack", "qty": 1, "price": 12.0, "asin": "B08JZ5FVLC", "q": "24V to 5V 3A buck converter", "section": "Electronics to run it", "electronics": true, "url": "https://www.amazon.com/dp/B08JZ5FVLC", "search": "https://www.amazon.com/s?k=24V+to+5V+3A+buck+converter", "line": 12.0}, {"part": "Emergency stop, latching", "spec": "Cuts motor power", "need": "1", "buy": "Each", "qty": 1, "price": 14.0, "asin": "B00N429U1G", "q": "latching emergency stop button", "section": "Electronics to run it", "electronics": true, "url": "https://www.amazon.com/dp/B00N429U1G", "search": "https://www.amazon.com/s?k=latching+emergency+stop+button", "line": 14.0}, {"part": "XT30 leads, male/female", "spec": "Power daisy-chain between drivers", "need": "6 pairs", "buy": "Pack", "qty": 1, "price": 10.0, "asin": null, "q": "XT30 connector pigtail 14AWG male female", "section": "Electronics to run it", "electronics": true, "url": null, "search": "https://www.amazon.com/s?k=XT30+connector+pigtail+14AWG+male+female", "line": 10.0}, {"part": "JST PH 3-pin and JST GH 7-pin cables", "spec": "CAN daisy-chain, encoder leads", "need": "10", "buy": "Kits", "qty": 2, "price": 9.0, "asin": null, "q": "JST PH 2.0 3 pin cable", "note": "Search for the GH 1.25 mm 7-pin kit separately.", "section": "Electronics to run it", "electronics": true, "url": null, "search": "https://www.amazon.com/s?k=JST+PH+2.0+3+pin+cable", "line": 18.0}, {"part": "22 AWG silicone wire kit", "spec": "6 colors", "need": "1", "buy": "Kit", "qty": 1, "price": 15.0, "asin": "B07G2JWYDW", "q": "22 AWG silicone wire kit", "section": "Electronics to run it", "electronics": true, "url": "https://www.amazon.com/dp/B07G2JWYDW", "search": "https://www.amazon.com/s?k=22+AWG+silicone+wire+kit", "line": 15.0}];
+(function () {
+  const KEY = "capstan-arm-5-ordered";
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
+  const money = (v) => "$" + v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const money2 = (v) => "$" + v.toFixed(2);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  ROWS.forEach((r, i) => { r.id = "r" + i + "-" + (r.asin || r.part).replace(/\W+/g, "").slice(0, 16); });
+
+  const groups = [];
+  ROWS.forEach((r) => {
+    let g = groups.find((x) => x.name === r.section);
+    if (!g) { g = { name: r.section, elec: r.electronics, rows: [] }; groups.push(g); }
+    g.rows.push(r);
+  });
+
+  const host = document.getElementById("sections");
+  groups.forEach((g, gi) => {
+    const sec = document.createElement("section");
+    if (g.elec) sec.className = "elec";
+    sec.dataset.elec = g.elec ? "1" : "0";
+    const sub = g.rows.reduce((a, r) => a + r.line, 0);
+    let html = '<h2>' + esc(g.name) + '<span>' + money(sub) + '</span></h2><div class="tbl"><table><colgroup><col style="width:44px"><col><col style="width:96px"><col style="width:118px"><col style="width:96px"><col style="width:90px"><col style="width:128px"></colgroup><thead><tr>' +
+      '<th aria-label="Ordered">✓</th><th>Part</th><th>Need</th><th>Buy</th><th class="num">Each <span class="est">est.</span></th>' +
+      '<th class="num">Line</th><th>Where</th></tr></thead><tbody>';
+    g.rows.forEach((r) => {
+      const owned = r.qty === 0;
+      let links = "";
+      if (r.url) links += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">Amazon listing</a>';
+      if (r.alt) links += '<a href="' + esc(r.alt[1]) + '" target="_blank" rel="noopener">' + esc(r.alt[0]) + '</a>';
+      if (r.alt2) links += '<a href="' + esc(r.alt2[1]) + '" target="_blank" rel="noopener">' + esc(r.alt2[0]) + '</a>';
+      if (r.search) links += '<a class="sec" href="' + esc(r.search) + '" target="_blank" rel="noopener">Search Amazon</a>';
+      html += '<tr id="' + r.id + '" class="' + (owned ? "owned" : "") + '">' +
+        '<td class="chk"><input type="checkbox" id="c-' + r.id + '" aria-label="Ordered: ' + esc(r.part) + '"' + (owned ? " disabled" : "") + '></td>' +
+        '<td><div class="pname">' + esc(r.part) + '</div><div class="spec">' + esc(r.spec) + '</div>' +
+        (r.note ? '<div class="note">' + esc(r.note) + '</div>' : "") + '</td>' +
+        '<td class="need">' + esc(r.need || "") + '</td>' +
+        '<td class="buy">' + esc(r.buy) + (r.qty > 1 ? ' × ' + r.qty : "") + '</td>' +
+        '<td class="num">' + money2(r.price) + '</td>' +
+        '<td class="num line">' + (owned ? "owned" : money2(r.line)) + '</td>' +
+        '<td><div class="links">' + links + '</div></td></tr>';
+    });
+    html += '</tbody></table></div>';
+    sec.innerHTML = html;
+    host.appendChild(sec);
+  });
+
+  const inc = document.getElementById("inc-elec");
+  function refresh() {
+    const useElec = inc.checked;
+    const buyable = ROWS.filter((r) => r.qty > 0 && (useElec || !r.electronics));
+    const mech = ROWS.filter((r) => !r.electronics).reduce((a, r) => a + r.line, 0);
+    const elec = ROWS.filter((r) => r.electronics).reduce((a, r) => a + r.line, 0);
+    const total = mech + (useElec ? elec : 0);
+    const ndone = buyable.filter((r) => done[r.id]).length;
+    const left = buyable.filter((r) => !done[r.id]).reduce((a, r) => a + r.line, 0);
+    document.getElementById("s-mech").textContent = money(mech);
+    document.getElementById("s-mech-n").textContent = ROWS.filter((r) => !r.electronics && r.qty > 0).length + " line items";
+    document.getElementById("s-elec").textContent = money(elec);
+    document.getElementById("s-elec-n").textContent = useElec ? ROWS.filter((r) => r.electronics).length + " line items" : "Not in total";
+    document.getElementById("s-total").textContent = money(total);
+    document.getElementById("s-total-n").textContent = useElec ? "Mechanical + electronics" : "Mechanical only";
+    document.getElementById("s-done").textContent = ndone + " / " + buyable.length;
+    document.getElementById("s-left").textContent = money(left) + " left to order";
+    document.getElementById("s-bar").style.width = (buyable.length ? (100 * ndone / buyable.length) : 0) + "%";
+    ROWS.forEach((r) => {
+      const tr = document.getElementById(r.id);
+      tr.classList.toggle("done", !!done[r.id]);
+      const cb = document.getElementById("c-" + r.id);
+      if (cb) cb.checked = !!done[r.id];
+    });
+    document.querySelectorAll('section[data-elec="1"]').forEach((s) => { s.style.opacity = useElec ? "" : "0.6"; });
+  }
+  host.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t && t.id && t.id.startsWith("c-")) {
+      const id = t.id.slice(2);
+      if (t.checked) done[id] = true; else delete done[id];
+      save(); refresh();
+    }
+  });
+  inc.addEventListener("change", refresh);
+  document.getElementById("clear").addEventListener("click", () => { done = {}; save(); refresh(); });
+  refresh();
+})();
+</script>

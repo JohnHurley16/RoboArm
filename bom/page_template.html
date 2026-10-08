@@ -1,0 +1,199 @@
+<title>Capstan Arm 5 Parts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@600;700&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; summary strip up top, then one ruled table per part family */
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --ink: #17191d;
+  --ink-2: #5d6371;
+  --line: #dde0e5;
+  --accent: #d95a12;
+  --accent-soft: #fbe7da;
+  --done: #2f7d4f;
+  --f-display: "Saira Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131519; --surface: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae; --line: #2c3038;
+    --accent: #f2772e; --accent-soft: #3a2518; --done: #5cc48a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131519; --surface: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae; --line: #2c3038;
+  --accent: #f2772e; --accent-soft: #3a2518; --done: #5cc48a; color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font: 400 14px/1.5 var(--f-body); }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 6px; }
+h1 { margin: 0; font: 700 34px/1.05 var(--f-display); letter-spacing: 0.005em; text-wrap: balance; }
+.lede { margin: 0; color: var(--ink-2); max-width: 68ch; }
+.lede b { color: var(--ink); font-weight: 600; }
+.summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.stat .k { font: 600 11px var(--f-display); text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-2); }
+.stat .v { font: 500 24px var(--f-mono); font-variant-numeric: tabular-nums; }
+.stat.total .v { color: var(--accent); }
+.stat .s { font-size: 12px; color: var(--ink-2); }
+.bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; margin-top: 6px; }
+.bar i { display: block; height: 100%; width: 0; background: var(--done); transition: width .25s; }
+.controls { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+.controls label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+.controls input { accent-color: var(--accent); width: 16px; height: 16px; }
+.controls button { font: 500 13px var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+.controls button:hover { border-color: var(--ink-2); }
+#sections { display: flex; flex-direction: column; gap: 30px; }
+section { display: flex; flex-direction: column; gap: 10px; }
+section h2 { margin: 0; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font: 700 19px var(--f-display); }
+section h2 span { font: 500 14px var(--f-mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+section.elec h2::after { content: none; }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+table { width: 100%; border-collapse: collapse; min-width: 780px; table-layout: fixed; }
+th { text-align: left; font: 600 11px var(--f-display); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+td.chk { width: 34px; }
+td.chk input { accent-color: var(--done); width: 17px; height: 17px; margin-top: 2px; cursor: pointer; }
+.pname { font-weight: 600; }
+.spec { color: var(--ink-2); font-size: 13px; }
+.note { margin-top: 4px; font-size: 12.5px; color: var(--ink-2); padding-left: 10px; border-left: 2px solid var(--accent-soft); }
+tr.done .pname, tr.done .spec { text-decoration: line-through; text-decoration-color: var(--ink-2); }
+tr.done td { opacity: .55; }
+tr.owned td.num.line { color: var(--ink-2); }
+.need { white-space: normal; font-family: var(--f-mono); font-size: 13px; }
+.buy { white-space: nowrap; }
+.links { display: flex; flex-direction: column; gap: 3px; white-space: nowrap; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a.sec { color: var(--ink-2); font-size: 12px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.est { font-size: 11px; color: var(--ink-2); font-family: var(--f-body); }
+footer { color: var(--ink-2); font-size: 13px; display: flex; flex-direction: column; gap: 6px; max-width: 75ch; }
+footer code { font-family: var(--f-mono); font-size: 12.5px; }
+@media (max-width: 720px) {
+  .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  h1 { font-size: 28px; }
+  .wrap { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Capstan Arm 5 Parts</h1>
+    <p class="lede">Everything you buy for the direct-drive version of the arm, matched to the 3D model's hardware list. Motors and drivers come from CubeMars and mjbots at their listed prices. <b>Amazon prices are estimates</b> (USD, October 2026), not read live. Check each listing before ordering. Tick a row once it's ordered; the ticks stay in this browser.</p>
+  </header>
+
+  <div class="summary" aria-live="polite">
+    <div class="stat"><span class="k">Mechanical</span><span class="v" id="s-mech">$0</span><span class="s" id="s-mech-n"></span></div>
+    <div class="stat"><span class="k">Electronics</span><span class="v" id="s-elec">$0</span><span class="s" id="s-elec-n"></span></div>
+    <div class="stat total"><span class="k">Estimated total</span><span class="v" id="s-total">$0</span><span class="s" id="s-total-n"></span></div>
+    <div class="stat"><span class="k">Ordered</span><span class="v" id="s-done">0 / 0</span><span class="s" id="s-left"></span><div class="bar"><i id="s-bar"></i></div></div>
+  </div>
+
+  <div class="controls">
+    <label><input type="checkbox" id="inc-elec" checked> Include electronics in the total</label>
+    <button type="button" id="clear">Clear ticks</button>
+  </div>
+
+  <div id="sections"></div>
+
+  <footer>
+    <p>"Need" is what the model uses. "Buy" is the pack to order, and the line total multiplies the pack price by the number of packs. Kits cover several screw sizes at once, so check the per-size counts on the listing.</p>
+    <p>Printed parts are not included; you'll also want black TPU 95A filament for the fingertips and coupling spiders. To change items or prices, edit <code>bom/bom_data.py</code> in the project and run <code>python bom/make_bom.py</code>, which also writes <code>bom_priced.csv</code>.</p>
+  </footer>
+</div>
+
+<script>
+const ROWS = __ROWS__;
+(function () {
+  const KEY = "capstan-arm-5-ordered";
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} };
+  const money = (v) => "$" + v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const money2 = (v) => "$" + v.toFixed(2);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  ROWS.forEach((r, i) => { r.id = "r" + i + "-" + (r.asin || r.part).replace(/\W+/g, "").slice(0, 16); });
+
+  const groups = [];
+  ROWS.forEach((r) => {
+    let g = groups.find((x) => x.name === r.section);
+    if (!g) { g = { name: r.section, elec: r.electronics, rows: [] }; groups.push(g); }
+    g.rows.push(r);
+  });
+
+  const host = document.getElementById("sections");
+  groups.forEach((g, gi) => {
+    const sec = document.createElement("section");
+    if (g.elec) sec.className = "elec";
+    sec.dataset.elec = g.elec ? "1" : "0";
+    const sub = g.rows.reduce((a, r) => a + r.line, 0);
+    let html = '<h2>' + esc(g.name) + '<span>' + money(sub) + '</span></h2><div class="tbl"><table><colgroup><col style="width:44px"><col><col style="width:96px"><col style="width:118px"><col style="width:96px"><col style="width:90px"><col style="width:128px"></colgroup><thead><tr>' +
+      '<th aria-label="Ordered">✓</th><th>Part</th><th>Need</th><th>Buy</th><th class="num">Each <span class="est">est.</span></th>' +
+      '<th class="num">Line</th><th>Where</th></tr></thead><tbody>';
+    g.rows.forEach((r) => {
+      const owned = r.qty === 0;
+      let links = "";
+      if (r.url) links += '<a href="' + esc(r.url) + '" target="_blank" rel="noopener">Amazon listing</a>';
+      if (r.alt) links += '<a href="' + esc(r.alt[1]) + '" target="_blank" rel="noopener">' + esc(r.alt[0]) + '</a>';
+      if (r.alt2) links += '<a href="' + esc(r.alt2[1]) + '" target="_blank" rel="noopener">' + esc(r.alt2[0]) + '</a>';
+      if (r.search) links += '<a class="sec" href="' + esc(r.search) + '" target="_blank" rel="noopener">Search Amazon</a>';
+      html += '<tr id="' + r.id + '" class="' + (owned ? "owned" : "") + '">' +
+        '<td class="chk"><input type="checkbox" id="c-' + r.id + '" aria-label="Ordered: ' + esc(r.part) + '"' + (owned ? " disabled" : "") + '></td>' +
+        '<td><div class="pname">' + esc(r.part) + '</div><div class="spec">' + esc(r.spec) + '</div>' +
+        (r.note ? '<div class="note">' + esc(r.note) + '</div>' : "") + '</td>' +
+        '<td class="need">' + esc(r.need || "") + '</td>' +
+        '<td class="buy">' + esc(r.buy) + (r.qty > 1 ? ' × ' + r.qty : "") + '</td>' +
+        '<td class="num">' + money2(r.price) + '</td>' +
+        '<td class="num line">' + (owned ? "owned" : money2(r.line)) + '</td>' +
+        '<td><div class="links">' + links + '</div></td></tr>';
+    });
+    html += '</tbody></table></div>';
+    sec.innerHTML = html;
+    host.appendChild(sec);
+  });
+
+  const inc = document.getElementById("inc-elec");
+  function refresh() {
+    const useElec = inc.checked;
+    const buyable = ROWS.filter((r) => r.qty > 0 && (useElec || !r.electronics));
+    const mech = ROWS.filter((r) => !r.electronics).reduce((a, r) => a + r.line, 0);
+    const elec = ROWS.filter((r) => r.electronics).reduce((a, r) => a + r.line, 0);
+    const total = mech + (useElec ? elec : 0);
+    const ndone = buyable.filter((r) => done[r.id]).length;
+    const left = buyable.filter((r) => !done[r.id]).reduce((a, r) => a + r.line, 0);
+    document.getElementById("s-mech").textContent = money(mech);
+    document.getElementById("s-mech-n").textContent = ROWS.filter((r) => !r.electronics && r.qty > 0).length + " line items";
+    document.getElementById("s-elec").textContent = money(elec);
+    document.getElementById("s-elec-n").textContent = useElec ? ROWS.filter((r) => r.electronics).length + " line items" : "Not in total";
+    document.getElementById("s-total").textContent = money(total);
+    document.getElementById("s-total-n").textContent = useElec ? "Mechanical + electronics" : "Mechanical only";
+    document.getElementById("s-done").textContent = ndone + " / " + buyable.length;
+    document.getElementById("s-left").textContent = money(left) + " left to order";
+    document.getElementById("s-bar").style.width = (buyable.length ? (100 * ndone / buyable.length) : 0) + "%";
+    ROWS.forEach((r) => {
+      const tr = document.getElementById(r.id);
+      tr.classList.toggle("done", !!done[r.id]);
+      const cb = document.getElementById("c-" + r.id);
+      if (cb) cb.checked = !!done[r.id];
+    });
+    document.querySelectorAll('section[data-elec="1"]').forEach((s) => { s.style.opacity = useElec ? "" : "0.6"; });
+  }
+  host.addEventListener("change", (e) => {
+    const t = e.target;
+    if (t && t.id && t.id.startsWith("c-")) {
+      const id = t.id.slice(2);
+      if (t.checked) done[id] = true; else delete done[id];
+      save(); refresh();
+    }
+  });
+  inc.addEventListener("change", refresh);
+  document.getElementById("clear").addEventListener("click", () => { done = {}; save(); refresh(); });
+  refresh();
+})();
+</script>

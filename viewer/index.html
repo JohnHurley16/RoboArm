@@ -1,0 +1,465 @@
+<title>Capstan Arm 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500;600;700&family=Archivo:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed 3D stage, control rail on the right (stacks under the stage on phones) */
+:root {
+  --stage: #e6e8ec;
+  --panel: #f6f7f9;
+  --ink: #17191d;
+  --ink-2: #5b6170;
+  --line: #d6d9df;
+  --accent: #e8661c;
+  --accent-ink: #ffffff;
+  --track: #cfd3da;
+  --f-display: "Saira Semi Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --stage: #14161a; --panel: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae;
+    --line: #2b2f37; --accent: #f2772e; --accent-ink: #14161a; --track: #343944;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --stage: #14161a; --panel: #1b1e23; --ink: #eceef2; --ink-2: #9aa1ae;
+  --line: #2b2f37; --accent: #f2772e; --accent-ink: #14161a; --track: #343944;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--panel); color: var(--ink); font-family: var(--f-body); font-size: 14px; }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
+.stage { position: relative; background: var(--stage); min-height: 0; min-width: 0; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.badge {
+  position: absolute; left: 16px; top: 14px; display: flex; flex-direction: column; gap: 2px;
+  pointer-events: none;
+}
+.badge h1 {
+  margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 26px; letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+.badge p { margin: 0; color: var(--ink-2); font-size: 13px; }
+.loading {
+  position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-2);
+  font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.04em;
+}
+.hint {
+  position: absolute; left: 16px; bottom: 12px; color: var(--ink-2); font-size: 12px; pointer-events: none;
+}
+.rail {
+  background: var(--panel); border-left: 1px solid var(--line); overflow-y: auto; min-width: 0;
+  padding-block: 18px 24px; padding-inline: 18px; display: flex; flex-direction: column; gap: 22px;
+}
+.sect { display: flex; flex-direction: column; gap: 10px; }
+.label {
+  font-family: var(--f-display); font-weight: 600; font-size: 12px; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--ink-2);
+}
+.presets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+button.chip {
+  font: 500 13px var(--f-body); color: var(--ink); background: transparent; border: 1px solid var(--line);
+  border-radius: 6px; padding: 8px 6px; cursor: pointer;
+}
+button.chip:hover { border-color: var(--ink-2); }
+button.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+button.chip:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.joint { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: baseline; }
+.joint .name { font-family: var(--f-display); font-weight: 600; font-size: 16px; }
+.joint .name b { color: var(--accent); font-weight: 700; margin-right: 6px; }
+.joint .val { font-family: var(--f-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.joint .meta { grid-column: 1 / -1; font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); }
+.joint input { grid-column: 1 / -1; width: 100%; }
+input[type=range] { -webkit-appearance: none; appearance: none; height: 22px; background: transparent; }
+input[type=range]::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: var(--track); }
+input[type=range]::-moz-range-track { height: 4px; border-radius: 2px; background: var(--track); }
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7px; border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--panel); box-shadow: 0 0 0 1px var(--accent);
+}
+input[type=range]::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%; background: var(--accent); border: 3px solid var(--panel);
+}
+.toggles { display: flex; flex-direction: column; gap: 8px; }
+.toggles label { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.toggles input { accent-color: var(--accent); width: 16px; height: 16px; }
+.legend { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.legend span { display: flex; align-items: center; gap: 10px; }
+.legend i { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--line); flex: none; }
+.spec { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; font-size: 13px; }
+.spec dt { color: var(--ink-2); }
+.spec dd { margin: 0; font-family: var(--f-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: 56vh auto; height: auto; }
+  .rail { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  .badge h1 { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <div class="stage" id="stage">
+    <div class="badge">
+      <h1>Capstan Arm 5</h1>
+      <p>Direct capstan joints · gimbal motors · wrist roll · parallel gripper</p>
+    </div>
+    <div class="loading" id="loading">Loading model…</div>
+    <div class="hint">Drag to orbit · pinch or scroll to zoom · right-drag to pan</div>
+  </div>
+
+  <aside class="rail">
+    <section class="sect">
+      <div class="label">Poses</div>
+      <div class="presets" id="presets"></div>
+    </section>
+
+    <section class="sect" id="joints">
+      <div class="label">Joints · output angle</div>
+    </section>
+
+    <section class="sect">
+      <div class="label">View</div>
+      <div class="toggles">
+        <label><input type="checkbox" id="t-shell"> Hide actuator shells (see the motors)</label>
+        <label><input type="checkbox" id="t-hw" checked> Show purchased parts</label>
+        <label><input type="checkbox" id="t-spin"> Turntable spin</label>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="label">Filament</div>
+      <div class="legend">
+        <span><i style="background:#ebebe6"></i>White PETG · links, turret, joint caps</span>
+        <span><i style="background:#30333a"></i>Graphite PETG · actuators, fork cheeks, base</span>
+        <span><i style="background:#f26b1a"></i>Orange PETG · capstan sectors and hubs</span>
+        <span><i style="background:#25272b"></i>Black TPU 95A · Fin Ray fingertips, coupling spiders</span>
+      </div>
+    </section>
+
+    <section class="sect">
+      <div class="label">Geometry</div>
+      <dl class="spec" id="spec"></dl>
+    </section>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+(function () {
+  const NAMES = { J1: "Base yaw", J2: "Shoulder", J3: "Elbow", J4: "Wrist pitch", J5: "Wrist roll", G: "Gripper" };
+  const PRESETS = {
+    Home:   { J1: 0,   J2: 0,   J3: 0,    J4: 0,   J5: 0,   G: 10 },
+    Display:{ J1: 25,  J2: 55,  J3: -85,  J4: -30, J5: 30,  G: 25 },
+    Pick:   { J1: -35, J2: 25,  J3: -95,  J4: -60, J5: 90,  G: 40 },
+    Reach:  { J1: 10,  J2: 30,  J3: -10,  J4: -20, J5: 0,   G: 15 },
+    Pour:   { J1: 40,  J2: 70,  J3: -70,  J4: -10, J5: 120, G: 5 },
+    Stow:   { J1: 0,   J2: 115, J3: -105, J4: 60,  J5: 0,   G: 0 },
+  };
+  const SHELL_PREFIX = ["act_motor_can", "act_rear_lid", "act_front_cap"];
+
+  const stage = document.getElementById("stage");
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  stage.prepend(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 5, 6000);
+  camera.position.set(620, 420, 640);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.target.set(150, 170, 0);
+  controls.enableDamping = true;
+  controls.minDistance = 180; controls.maxDistance = 2200;
+  controls.maxPolarAngle = Math.PI * 0.495;
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f99, 0.75));
+  const key = new THREE.DirectionalLight(0xffffff, 0.85);
+  key.position.set(380, 900, 520);
+  key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -600, right: 600, top: 600, bottom: -600, near: 100, far: 2500 });
+  key.shadow.bias = -0.0004;
+  scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.35);
+  rim.position.set(-600, 300, -500);
+  scene.add(rim);
+
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(900, 64), new THREE.ShadowMaterial({ opacity: 0.16 }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true;
+  scene.add(floor);
+  const grid = new THREE.PolarGridHelper(600, 12, 6, 64, 0x888888, 0x888888);
+  grid.material.transparent = true; grid.material.opacity = 0.14;
+  scene.add(grid);
+
+  // model root: CAD is Z-up, three.js is Y-up
+  const root = new THREE.Group();
+  root.rotation.x = -Math.PI / 2;
+  scene.add(root);
+
+  function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function applyTheme() {
+    const c = new THREE.Color(cssVar("--stage") || "#e6e8ec");
+    renderer.setClearColor(c, 1);
+    const dark = c.r + c.g + c.b < 1.0;
+    grid.material.opacity = dark ? 0.22 : 0.14;
+    floor.material.opacity = dark ? 0.35 : 0.16;
+  }
+  applyTheme();
+  try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme); } catch (e) {}
+  new MutationObserver(applyTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
+  function resize() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / Math.max(h, 1);
+    camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(stage);
+  resize();
+
+  // ---------------------------------------------------------------- UI
+  const q = Object.assign({}, PRESETS.Display);
+  const target = Object.assign({}, q);
+  const presetBox = document.getElementById("presets");
+  const presetBtns = {};
+  Object.keys(PRESETS).forEach(function (name) {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.textContent = name; b.id = "p-" + name;
+    b.setAttribute("aria-pressed", name === "Display" ? "true" : "false");
+    b.addEventListener("click", function () {
+      Object.assign(target, PRESETS[name]);
+      Object.keys(presetBtns).forEach(k => presetBtns[k].setAttribute("aria-pressed", k === name ? "true" : "false"));
+    });
+    presetBox.appendChild(b); presetBtns[name] = b;
+  });
+
+  const sliders = {}, vals = {};
+  function buildJoints(data) {
+    const box = document.getElementById("joints");
+    data.rom.G = data.kin.phi;
+    ["J1", "J2", "J3", "J4", "J5", "G"].forEach(function (j) {
+      const [lo, hi] = data.rom[j];
+      const row = document.createElement("div");
+      row.className = "joint";
+      row.innerHTML =
+        '<label class="name" for="s-' + j + '"><b>' + j + "</b>" + NAMES[j] + "</label>" +
+        '<span class="val" id="v-' + j + '"></span>' +
+        '<input type="range" id="s-' + j + '" min="' + lo + '" max="' + hi + '" step="1">' +
+        '<span class="meta">' + (j === "G"
+          ? "Micro servo · parallel jaws · 1 to " + data.kin.open_max + " mm opening"
+          : data.ratio[j] + ":1 · range " + lo + "° to " + hi + "°") + "</span>";
+      box.appendChild(row);
+      sliders[j] = row.querySelector("input");
+      vals[j] = row.querySelector(".val");
+      sliders[j].value = q[j];
+      sliders[j].addEventListener("input", function () {
+        target[j] = +this.value; q[j] = +this.value;
+        Object.keys(presetBtns).forEach(k => presetBtns[k].setAttribute("aria-pressed", "false"));
+      });
+    });
+    const spec = document.getElementById("spec");
+    const rows = [
+      ["Shoulder height", data.kin.J2_Z + " mm"],
+      ["Upper arm", data.kin.L1 + " mm"],
+      ["Forearm", data.kin.L2 + " mm"],
+      ["Drive", "Gimbal motor → capstan, no gearbox"],
+      ["Motors", "CubeMars GL60 (shoulder, elbow), GL40"],
+      ["Fingertips", "TPU Fin Ray, swappable"],
+      ["Shoulder", "Spring balancer, about 4× less heat"],
+      ["Capstan", "Ø1 mm Dyneema"],
+      ["Bearings", "608 joints, 6800/6801/6705"],
+    ];
+    spec.innerHTML = rows.map(r => "<dt>" + r[0] + "</dt><dd>" + r[1] + "</dd>").join("");
+  }
+
+  // ---------------------------------------------------------------- model
+  const bodies = {};
+  const shellMeshes = [], hwMeshes = [];
+  let kin = null;
+
+  function b64(s, Type) {
+    const bin = atob(s);
+    const buf = new ArrayBuffer(bin.length);
+    const u8 = new Uint8Array(buf);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return new Type(buf);
+  }
+
+  function material(entry) {
+    const c = new THREE.Color().setRGB(entry.c[0], entry.c[1], entry.c[2]).convertSRGBToLinear();
+    if (entry.kind === "printed") return new THREE.MeshStandardMaterial({ color: c, roughness: 0.62, metalness: 0.0 });
+    if (entry.kind === "cable") return new THREE.MeshStandardMaterial({ color: c, roughness: 0.45, emissive: c, emissiveIntensity: 0.15 });
+    if (entry.kind === "pcb") return new THREE.MeshStandardMaterial({ color: c, roughness: 0.5 });
+    return new THREE.MeshStandardMaterial({ color: c, roughness: 0.32, metalness: 0.55 });
+  }
+
+  function load(data) {
+    kin = data.kin;
+    const lib = data.lib.map(function (e) {
+      const Q = b64(e.v, Uint16Array);
+      const pos = new Float32Array(Q.length);
+      for (let i = 0; i < Q.length; i += 3) {
+        pos[i] = e.lo[0] + Q[i] * e.s[0];
+        pos[i + 1] = e.lo[1] + Q[i + 1] * e.s[1];
+        pos[i + 2] = e.lo[2] + Q[i + 2] * e.s[2];
+      }
+      const idx = b64(e.f, e.i32 ? Uint32Array : Uint16Array);
+      const g = new THREE.BufferGeometry();
+      g.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      g.setIndex(new THREE.BufferAttribute(idx, 1));
+      g.computeVertexNormals();
+      return { g: g, m: material(e), e: e };
+    });
+    Object.keys(data.bodies).forEach(function (bn) {
+      const grp = new THREE.Group();
+      grp.matrixAutoUpdate = false;
+      data.bodies[bn].forEach(function (row) {
+        const L = lib[row[0]];
+        const mesh = new THREE.Mesh(L.g, L.m);
+        mesh.matrixAutoUpdate = false;
+        mesh.matrix.fromArray(row.slice(1));
+        mesh.castShadow = L.e.kind === "printed" || L.e.name.indexOf("motor") === 0;
+        mesh.receiveShadow = L.e.kind === "printed";
+        if (SHELL_PREFIX.some(p => L.e.name.indexOf(p) === 0)) shellMeshes.push(mesh);
+        if (L.e.kind === "hardware") hwMeshes.push(mesh);
+        grp.add(mesh);
+      });
+      bodies[bn] = grp;
+      root.add(grp);
+    });
+    if (data.bal) setupBalancer(data.bal, lib);
+    buildJoints(data);
+    document.getElementById("loading").hidden = true;
+  }
+
+  // ------------------------------------------------ shoulder balancer (moves with J2)
+  let bal = null;
+  function meshFrom(L, rowMatrix) {
+    const m = new THREE.Mesh(L.g, L.m);
+    m.matrixAutoUpdate = false;
+    if (rowMatrix) m.matrix.fromArray(rowMatrix);
+    m.castShadow = true;
+    return m;
+  }
+  function setupBalancer(B, lib) {
+    const turret = bodies.turret;
+    const cableMat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color().setRGB(B.cable_c[0], B.cable_c[1], B.cable_c[2]).convertSRGBToLinear(),
+      roughness: 0.45 });
+    const unit = new THREE.CylinderGeometry(0.5, 0.5, 1, 10);
+    function cable() { const m = new THREE.Mesh(unit, cableMat); m.matrixAutoUpdate = false; turret.add(m); return m; }
+    const piston = new THREE.Group(); piston.matrixAutoUpdate = false;
+    B.dyn.piston.forEach(function (row) { piston.add(meshFrom(lib[row[0]], row.slice(1))); });
+    turret.add(piston);
+    const spring = meshFrom(lib[B.dyn.spring[0]]);
+    const springBase = new THREE.Matrix4().fromArray(B.dyn.spring.slice(1));
+    turret.add(spring);
+    bal = { B: B, free: cable(), s1: cable(), s2: cable(), piston: piston, spring: spring, springBase: springBase };
+  }
+  const _up = new THREE.Vector3(0, 1, 0);
+  function placeRod(mesh, a, b) {
+    const d = new THREE.Vector3().subVectors(b, a);
+    const len = d.length();
+    const q = new THREE.Quaternion().setFromUnitVectors(_up, d.clone().normalize());
+    mesh.matrix.compose(new THREE.Vector3().addVectors(a, b).multiplyScalar(0.5), q, new THREE.Vector3(1, len, 1));
+  }
+  function updateBalancer(q2deg) {
+    if (!bal) return;
+    const B = bal.B, J2Z = kin.J2_Z;
+    const t = THREE.MathUtils.degToRad(B.beta + q2deg);
+    const P = [B.b * Math.cos(t), J2Z + B.b * Math.sin(t)];
+    const dx = P[0] - B.A[0], dz = P[1] - B.A[1];
+    const d = Math.hypot(dx, dz), th0 = Math.atan2(dz, dx), dl = Math.acos(Math.min(1, B.r / d));
+    let best = null;
+    [th0 + dl, th0 - dl].forEach(function (phi) {
+      const T = [B.A[0] + B.r * Math.cos(phi), B.A[1] + B.r * Math.sin(phi)];
+      const u = [T[0] - P[0], T[1] - P[1]], n = Math.hypot(u[0], u[1]);
+      const dot = (u[0] * Math.sin(phi) - u[1] * Math.cos(phi)) / n;   // clockwise wrap test
+      if (!best || dot > best.dot) best = { dot: dot, T: T, n: n, phi: phi };
+    });
+    let ph = THREE.MathUtils.radToDeg(best.phi);
+    while (ph < -90) ph += 360;
+    while (ph > 270) ph -= 360;
+    const L = best.n + B.r * THREE.MathUtils.degToRad(ph + 90);
+    const s = B.free - (L - B.L0) / 2;
+    const xf = B.bulk[0] - s;
+    placeRod(bal.free, new THREE.Vector3(P[0], B.y, P[1]), new THREE.Vector3(best.T[0], B.y, best.T[1]));
+    placeRod(bal.s1, new THREE.Vector3(B.bulk[1], B.y, B.strand_z), new THREE.Vector3(xf + B.pp_x, B.y, B.strand_z));
+    placeRod(bal.s2, new THREE.Vector3(B.bulk[1], B.y, B.anchor_z), new THREE.Vector3(xf + B.pp_x, B.y, B.anchor_z));
+    bal.piston.matrix.makeTranslation(xf, B.y, B.pod_z);
+    bal.spring.matrix.copy(bal.springBase).multiply(new THREE.Matrix4().makeScale(1, 1, s / B.s_ref));
+  }
+
+  const ax = new THREE.Vector3(0, -1, 0);
+  function link(deg) { return new THREE.Matrix4().makeRotationAxis(ax, THREE.MathUtils.degToRad(deg)); }
+  function tr(x, y, z) { return new THREE.Matrix4().makeTranslation(x, y, z); }
+  function pose() {
+    if (!kin) return;
+    const Ft = new THREE.Matrix4().makeRotationZ(THREE.MathUtils.degToRad(q.J1));
+    const Fu = Ft.clone().multiply(tr(0, 0, kin.J2_Z)).multiply(link(q.J2));
+    const Ff = Fu.clone().multiply(tr(kin.L1, 0, 0)).multiply(link(q.J3));
+    const Fh = Ff.clone().multiply(tr(kin.L2, 0, 0)).multiply(link(q.J4));
+    const Fg = Fh.clone().multiply(tr(kin.XG, 0, 0)).multiply(new THREE.Matrix4().makeRotationX(THREE.MathUtils.degToRad(q.J5)));
+    const ph = THREE.MathUtils.degToRad(q.G), c = Math.cos(ph), s = Math.sin(ph);
+    const F = {
+      base: new THREE.Matrix4(), turret: Ft, upper: Fu, fore: Ff, hand: Fh, grip: Fg,
+      l1u: Fg.clone().multiply(tr(kin.XP, 0, kin.PZ)).multiply(link(q.G)),
+      l2u: Fg.clone().multiply(tr(kin.XP, 0, kin.PZ + kin.LH)).multiply(link(q.G)),
+      l1l: Fg.clone().multiply(tr(kin.XP, 0, -kin.PZ)).multiply(link(-q.G)),
+      l2l: Fg.clone().multiply(tr(kin.XP, 0, -kin.PZ - kin.LH)).multiply(link(-q.G)),
+      fu: Fg.clone().multiply(tr(kin.XP + kin.LL * c, 0, kin.PZ + kin.LL * s)),
+      fl: Fg.clone().multiply(tr(kin.XP + kin.LL * c, 0, -kin.PZ - kin.LL * s)).multiply(new THREE.Matrix4().makeRotationX(Math.PI)),
+    };
+    Object.keys(bodies).forEach(function (bn) { bodies[bn].matrix.copy(F[bn]); bodies[bn].matrixWorldNeedsUpdate = true; });
+    updateBalancer(q.J2);
+    Object.keys(vals).forEach(function (j) {
+      if (j === "G") {
+        const gap = 2 * (kin.PZ + kin.LL * Math.sin(THREE.MathUtils.degToRad(q.G)) - kin.face);
+        vals[j].textContent = gap.toFixed(0) + " mm";
+      } else vals[j].textContent = (q[j] >= 0 ? "+" : "") + q[j].toFixed(0) + "°";
+    });
+  }
+
+  document.getElementById("t-shell").addEventListener("change", function () {
+    shellMeshes.forEach(m => { m.visible = !this.checked; });
+  });
+  document.getElementById("t-hw").addEventListener("change", function () {
+    hwMeshes.forEach(m => { m.visible = this.checked; });
+  });
+  const spin = document.getElementById("t-spin");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function tick() {
+    let moving = false;
+    Object.keys(target).forEach(function (j) {
+      const d = target[j] - q[j];
+      if (Math.abs(d) > 0.05) { q[j] += reduced ? d : d * 0.12; moving = true; }
+      else q[j] = target[j];
+      if (sliders[j] && moving) sliders[j].value = Math.round(q[j]);
+    });
+    if (spin.checked) {
+      const t = performance.now() * 0.00012;
+      const r = Math.hypot(camera.position.x - controls.target.x, camera.position.z - controls.target.z);
+      camera.position.x = controls.target.x + r * Math.cos(t);
+      camera.position.z = controls.target.z + r * Math.sin(t);
+    }
+    pose();
+    controls.update();
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+
+  fetch("viewer_data.json")
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(load)
+    .catch(function (e) {
+      document.getElementById("loading").textContent = "The model data didn't load (" + e.message + "). Reload the page to try again.";
+    });
+  tick();
+})();
+</script>
